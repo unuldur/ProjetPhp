@@ -10,7 +10,7 @@
         ?>
         <?php
         include_once "News.php";
-        $newsTab = [new News("News1","Image/PlayerIl.png","12/11/1996","un contenu certe un peu long mais c'est juste un test pour voir si celui ci marche ne serait ce que'un petit peu voila maintenat je suis content j'erit avec plein de fautes et beaucoup"
+        $newsTab = [new News("News1","Image/PlayerIl.png","12/11/1996","Un contenu certe un peu long mais c'est juste un test pour voir si celui ci marche ne serait ce que'un petit peu voila maintenat je suis content j'erit avec plein de fautes et beaucoup"
         ),new News("News2","Image/","45/45/45","ahzcouaecauevuc")];
         foreach($newsTab as $new)
         if (isset($new)) {
@@ -20,7 +20,7 @@
                     <div class="col-md-2"></div>
                     <article class="col-md-8 border margin padding">
                         <div class="row" >
-                            <img src= "<?php echo $new->getImage()?>" class="col-md-3 "  />
+                            <img src= "<?php echo $new->getImage()?>" class="col-md-3"  />
                             <div class="col-md-9">
                                 <h2 class="col-md-12 "><?php echo $new->getTitre()?></h2>
                                 <p class="col-md-12" style="background-color: #2e6da4"><?php echo $new->getContenu()?></p>
