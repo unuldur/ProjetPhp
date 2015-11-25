@@ -37,7 +37,7 @@
                             <input type="text"/>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" style="resize:vertical" rows="3"></textarea>
+                            <textarea class="form-control" rows="3"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Poster</button>
                     </form>

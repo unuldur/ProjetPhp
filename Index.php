@@ -30,7 +30,7 @@
                             <p class="col-md-4">
                                 <?php echo $new->getDate()?>
                             </p>
-                            <p class="col-md-4">
+                            <p class="col-md-4"/>
                             <div class="col-md-4 text-right">
                                 <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
                             </div>
@@ -38,8 +38,6 @@
                         </div>
                     </article>
                 </div>
-
-
                 <?php
                 }
         }

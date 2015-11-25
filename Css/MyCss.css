@@ -19,3 +19,13 @@ h5
     float: left;
     padding-right: 10px;
 }
+
+textarea
+{
+    resize: vertical;
+}
+
+#inputfile
+{
+    padding-top: 10px;
+}
