@@ -16,21 +16,21 @@
         if (isset($new)) {
             {
                 ?>
-                <div class="row" >
+                <div class="ro" >
                     <div class="col-md-2"></div>
-                    <article class="col-md-8 border margin padding">
+                    <article class="col-md-8 border margin padding jumbotron">
                         <div class="row" >
-                            <img src= "<?php echo $new->getImage()?>" class="col-md-3"  />
+                            <img src= "<?php echo $new->getImage()?>" class="col-md-3" align="left" />
                             <div class="col-md-9">
                                 <h2 class="col-md-12 "><?php echo $new->getTitre()?></h2>
-                                <p class="col-md-12" style="background-color: #2e6da4"><?php echo $new->getContenu()?></p>
+                                <p class="col-md-12"><?php echo $new->getContenu()?></p>
                             </div>
                         </div>
                         <div class="row">
                             <p class="col-md-4">
                                 <?php echo $new->getDate()?>
                             </p>
-                            <p class="col-md-4"/>
+                            <p class="col-md-4">
                             <div class="col-md-4 text-right">
                                 <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
                             </div>
