@@ -23,6 +23,7 @@
                 <img src="<?php echo $new->getImage() ?>" align="right" height="100px">
                 <h1><?php echo $new->getTitre(); ?></h1>
                 <p><?php echo $new->getContenu(); ?></p>
+                <p><?php echo  $idNew; ?></p>
             </div>
             <hr>
             <!-- Commentaires -->
