@@ -13,3 +13,9 @@
 {
     margin: 5px;
 }
+
+h5
+{
+    float: left;
+    padding-right: 10px;
+}
