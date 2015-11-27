@@ -11,7 +11,7 @@
         <?php
         include_once "News.php";
         $newsTab = [new News("News1","Image/PlayerIl.png","12/11/1996","Un contenu certe un peu long mais c'est juste un test pour voir si celui ci marche ne serait ce que'un petit peu voila maintenat je suis content j'erit avec plein de fautes et beaucoup"
-        ),new News("News2","Image/","45/45/45","ahzcouaecauevuc")];
+        ,1),new News("News2","Image/","45/45/45","ahzcouaecauevuc",2)];
         foreach($newsTab as $new)
         if (isset($new)) {
             {
@@ -22,7 +22,7 @@
                         <div class="row" >
                             <img src= "<?php echo $new->getImage()?>" class="col-md-3" align="left" />
                             <div class="col-md-9">
-                                <h2 class="col-md-12 "><?php echo $new->getTitre()?></h2>
+                                <a class="col-md-12 h2" href="<?php echo "New.php?page=".$new->getId() ?>"><?php echo $new->getTitre()?></a>
                                 <p class="col-md-12"><?php echo $new->getContenu()?></p>
                             </div>
                         </div>

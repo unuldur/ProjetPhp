@@ -7,7 +7,7 @@ class News
     private $Contenu;
     private $Date;
     private $Image;
-
+    private $Id;
     /**
      * News constructor.
      * @param $Titre
@@ -15,12 +15,13 @@ class News
      * @param $Date
      * @param $Contenu
      */
-    public function __construct($Titre, $Image, $Date, $Contenu)
+    public function __construct($Titre, $Image, $Date, $Contenu ,$id)
     {
         $this->Titre = $Titre;
         $this->Image = $Image;
         $this->Date = $Date;
         $this->Contenu = $Contenu;
+        $this->Id = $id;
     }
 
     /**
@@ -37,6 +38,11 @@ class News
     public function getImage()
     {
         return $this->Image;
+    }
+
+    public function getId()
+    {
+        return $this->Id;
     }
 
     /**

@@ -1,6 +1,6 @@
 
                 <header class="page-header text-center">
-                    <h1 class="h1">Mon jeu</h1>
+                    <h1 class="h1"><img src="Image/Downhell.png"></h1>
                 </header>
                 <nav class="navbar navbar-inverse">
                     <div class="container-fluid">
