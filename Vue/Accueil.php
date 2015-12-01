@@ -38,8 +38,9 @@
                 <?php
                 }
         }
-        require ($rep.$vues['Footer']);
+
         ?>
     </div>
+    <?php require ("Footer.php"); ?>
     </body>
 </html>

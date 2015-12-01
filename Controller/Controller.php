@@ -11,14 +11,26 @@ class Controller
 
     function __construct()
     {
+        session_start();
+
         Autoload::_autoload('Validation');
-        Autoload::_autoload('New');
+        Autoload::_autoload('News');
         try{
-            $action = $_REQUEST['action'];
+
+            $action = "toNew";
             switch($action)
             {
-                case 'NULL':
+                case NULL:
                     $this->Accueil();
+                    break;
+                case "toFormulaire":
+                    $this->toFormulaire();
+                    break;
+                case "toCreerNew":
+                    $this->toCreerNew();
+                    break;
+                case "toNew":
+                    $this->toNew();
                     break;
             }
         }catch (Exception $e)
@@ -29,13 +41,36 @@ class Controller
 
     function Accueil()
     {
-        $newsTab = [new News("News1", "Image/PlayerIl.png", "12/11/1996", "Un contenu certe un peu long mais c'est juste un test pour voir si celui ci marche ne serait ce que'un petit peu voila maintenat je suis content j'erit avec plein de fautes et beaucoup"
-            , 1), new News("News2", "Image/", "45/45/45", "ahzcouaecauevuc", 2)];
+        $newsTab = [new News("News1", "Vue/Image/PlayerIl.png", "12/11/1996", "Un contenu certe un peu long mais c'est juste un test pour voir si celui ci marche ne serait ce que'un petit peu voila maintenat je suis content j'erit avec plein de fautes et beaucoup"
+            , 1), new News("News2", "Vue/Image/", "45/45/45", "ahzcouaecauevuc", 2)];
+        require(__DIR__."/../Vue/Accueil.php");
 
-        if (!empty($rep)) {
-            if (!empty($vues)) {
-                require($rep.$vues['Accueil']);
-            }
-        }
+    }
+
+    function toFormulaire()
+    {
+        require(__DIR__."/../Vue/Formulaire.php");
+    }
+
+    function toCreerNew()
+    {
+        require(__DIR__."/../Vue/CreerNew.php");
+    }
+
+    function toNew()
+    {
+        $newsTab = [new News("News1","Vue/Image/PlayerIl.png","12/11/1996","Un contenu certe un peu long mais c'est juste un test pour voir si celui ci marche ne serait ce que'un petit peu voila maintenat je suis content j'erit avec plein de fautes et beaucoup"
+        ,1),new News("News2","Image/","45/45/45","ahzcouaecauevuc",2), new News("Titre de la new","Vue/Image/PlayerIl.png","10/01/2015","Paragraphe de l'article",3)];
+        if(!isset($_GET['page']))
+            $idNew = 1;
+        else
+            $idNew = $_GET['page'];
+        $idNew = Validation::SanitizeItem($idNew,'int');
+        if($idNew < 1)
+            $idNew = 1;
+        if($idNew > count($newsTab))
+            $idNew = count($newsTab);
+        $new = $newsTab[$idNew-1];
+        require(__DIR__."/../Vue/New.php");
     }
 }

@@ -1,6 +1,6 @@
 
                 <header class="page-header text-center">
-                    <h1 class="h1"><img src="Image/Downhell.png"></h1>
+                    <h1 class="h1"><img src="Vue/Image/Downhell.png"></h1>
                 </header>
                 <nav class="navbar navbar-inverse">
                     <div class="container-fluid">
@@ -17,9 +17,9 @@
                                 </ul>
                             </li>
                         </ul>
-                        <form class="navbar-form navbar-right form-inline" action="Formulaire.php">
+                        <form class="navbar-form navbar-right form-inline">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-info btn-sm">Administrateur</button>
+                                <button type="submit" class="btn btn-info btn-sm"  name="action" value="toFormulaire">Administrateur</button>
                             </div>
                         </form>
                     </div>

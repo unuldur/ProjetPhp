@@ -26,5 +26,8 @@
 
             </form>
         </div>
+        <?php
+        require (__DIR__."/Footer.php")
+        ?>
     </body>
 </html>

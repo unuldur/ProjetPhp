@@ -5,25 +5,12 @@
         <div class="container">
             <?php
                 require_once "Debut.php";
-                include_once "News.php";
-            $newsTab = [new News("News1","Image/PlayerIl.png","12/11/1996","Un contenu certe un peu long mais c'est juste un test pour voir si celui ci marche ne serait ce que'un petit peu voila maintenat je suis content j'erit avec plein de fautes et beaucoup"
-            ,1),new News("News2","Image/","45/45/45","ahzcouaecauevuc",2), new News("Titre de la new","Image/PlayerIl.png","10/01/2015","Paragraphe de l'article",3)];
-                if(!isset($_GET['page']))
-                    $idNew = 1;
-                else
-                    $idNew = $_GET['page'];
-                $idNew = Validation::SanitizeItem($idNew,'int');
-                if($idNew < 1)
-                    $idNew = 1;
-                if($idNew > count($newsTab))
-                    $idNew = count($newsTab);
-                $new = $newsTab[$idNew-1];
             ?>
             <div class="jumbotron">
                 <img src="<?php echo $new->getImage() ?>" align="right" height="100px">
                 <h1><?php echo $new->getTitre(); ?></h1>
                 <p><?php echo $new->getContenu(); ?></p>
-                <p><?php echo  $idNew; ?></p>
+                <p><?php echo  $new->getDate(); ?></p>
             </div>
             <hr>
             <!-- Commentaires -->
