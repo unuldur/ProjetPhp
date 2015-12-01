@@ -9,9 +9,6 @@
         require_once "Debut.php";
         ?>
         <?php
-        include_once "News.php";
-        $newsTab = [new News("News1","Image/PlayerIl.png","12/11/1996","Un contenu certe un peu long mais c'est juste un test pour voir si celui ci marche ne serait ce que'un petit peu voila maintenat je suis content j'erit avec plein de fautes et beaucoup"
-        ,1),new News("News2","Image/","45/45/45","ahzcouaecauevuc",2)];
         foreach($newsTab as $new)
         if (isset($new)) {
             {
@@ -41,10 +38,8 @@
                 <?php
                 }
         }
+        require ($rep.$vues['Footer']);
         ?>
     </div>
-
-    <script src="js/jquery.js"></script>
-    <script src="bootstrap/js/bootstrap.js "></script>
     </body>
 </html>

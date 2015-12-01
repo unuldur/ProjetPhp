@@ -21,13 +21,13 @@ class Autoload
     public static function  _autoload($class)
     {
         global $rep;
-        $filename = $class.'php';
-        $dir= ['Modele/','./','Config/','controleur/'];
+        $filename = $class.'.php';
+        $dir= ['Modele/','./','Config/','Controller/'];
         foreach ($dir as $d)
         {
             $file = $rep.$d.$filename;
                 if(file_exists($file)){
-                    include $file;
+                    include ("$file");
                 }
         }
     }
