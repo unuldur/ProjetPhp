@@ -1,6 +1,6 @@
 <html>
     <?php
-        require_once "Entete.php"
+    require_once "Entete.php"
     ?>
     <body>
         <div class="container" >
