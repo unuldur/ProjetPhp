@@ -19,7 +19,7 @@
                         <div class="row" >
                             <img src= "<?php echo $new->getImage()?>" class="col-md-3" align="left" />
                             <div class="col-md-9">
-                                <a class="col-md-12 h2" href="<?php echo "New.php?page=".$new->getId() ?>"><?php echo $new->getTitre()?></a>
+                                <a class="col-md-12 h2" href="<?php echo "Index.php?action=toNew&page=".$new->getId() ?>"><?php echo $new->getTitre()?></a>
                                 <p class="col-md-12"><?php echo $new->getContenu()?></p>
                             </div>
                         </div>

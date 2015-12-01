@@ -28,8 +28,9 @@ class Validation
     }
 
     /**
-     * @param $value valeur à valider
-     * @param $type type de la valeur
+     * @param $value Validation valeur à valider
+     * @param $type Validation type de la valeur
+     * @return Validation return la valeur sanitize
      */
     public static function SanitizeItem($value,$type)
     {
