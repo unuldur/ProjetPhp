@@ -40,6 +40,24 @@
         }
 
         ?>
+
+
+    </div>
+
+    <div class="container text-center">
+        <ul class="pagination">
+            <li <?php if($pageActuelle==1) echo 'class="disabled"'?>"><a <?php $a = $pageActuelle-1; if($pageActuelle!=1)echo' href="Index.php?page='.$a.'"'; ?>>&laquo;</a></li>
+            <?php
+                for($i=1;$i<=$nbPage;$i++)
+                {
+                    if($pageActuelle != $i)
+                        echo '<li><a href="Index.php?page='.$i.'">'.$i.'</a></li>';
+                    else
+                        echo '<li class="active"><a href="#">'.$i.'</a></li>';
+                }
+            ?>
+            <li <?php if($pageActuelle==$nbPage) echo 'class="disabled"'?>"><a <?php $a = $pageActuelle+1; if($pageActuelle!=$nbPage)echo' href="Index.php?page='.$a.'"'; ?>>&raquo;</a></li>
+        </ul>
     </div>
     <?php require ("Footer.php"); ?>
     </body>

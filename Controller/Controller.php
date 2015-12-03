@@ -49,8 +49,14 @@ class Controller
 
     function Accueil()
     {
+        if(!isset($_REQUEST['page']))
+            $pageActuelle = 1;
+        else
+            $pageActuelle = $_REQUEST['page'];
         $mod = new Modele();
-        $newsTab = $mod->allNews();
+        $nbNew = $mod->nbNews();
+        $nbPage = ceil($nbNew/5);
+        $newsTab = $mod->findNews(5,($pageActuelle-1)*5);
         require(__DIR__."/../Vue/Accueil.php");
 
     }

@@ -18,14 +18,23 @@ class Modele
 
     }
 
-    function allNews()
+    function findNews($nbNews,$aPartirDe)
     {
-        return Doctrine_Core::getTable('News')->findAll();
+        return Doctrine_Query::create()
+            ->from('News')
+            ->orderBy('date DESC')
+            ->limit($nbNews)
+            ->offset($aPartirDe)
+            ->execute();
     }
 
     function findOneNews($id)
     {
-        return Doctrine_Query::create()->from('new')->where($id == 'id')->execute();
-        //return Doctrine_Core::getTable('News')->find($id);
+        return Doctrine_Core::getTable('News')->find($id);
+    }
+
+    function nbNews()
+    {
+        return Doctrine_Core::getTable('News')->count();
     }
 }
