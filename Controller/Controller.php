@@ -11,11 +11,11 @@ class Controller
 
     function __construct()
     {
+        global $rep,$vues;
         session_start();
 
         Autoload::_autoload('Validation');
-        Autoload::_autoload('News');
-
+        Autoload::_autoload('Modele');
         try{
             if(isset($_REQUEST['action']))
                 $action = $_REQUEST['action'];
@@ -35,17 +35,22 @@ class Controller
                 case "toNew":
                     $this->toNew();
                     break;
+                default:
+                    $tabError[]="Erreur 404! Page Not Found";
+                    require(__DIR__."/../Vue/Erreur.php");
+                    break;
             }
         }catch (Exception $e)
         {
-            $erreur[]="Erreur ! Un probleme est survenu";
+            $tabError[]="Erreur ! Un probleme est survenu";
+            require(__DIR__."/../Vue/Erreur.php");
         }
     }
 
     function Accueil()
     {
-        $newsTab = [new News("News1", "Vue/Image/PlayerIl.png", "12/11/1996", "Un contenu certe un peu long mais c'est juste un test pour voir si celui ci marche ne serait ce que'un petit peu voila maintenat je suis content j'erit avec plein de fautes et beaucoup"
-            , 1), new News("News2", "Vue/Image/", "45/45/45", "ahzcouaecauevuc", 2)];
+        $mod = new Modele();
+        $newsTab = $mod->allNews();
         require(__DIR__."/../Vue/Accueil.php");
 
     }
@@ -62,19 +67,29 @@ class Controller
 
     function toNew()
     {
-        $newsTab = [new News("News1","Vue/Image/PlayerIl.png","12/11/1996","Un contenu certe un peu long mais c'est juste un test pour voir si celui ci marche ne serait ce que'un petit peu voila maintenat je suis content j'erit avec plein de fautes et beaucoup"
-        ,1),new News("News2","Image/","45/45/45","ahzcouaecauevuc",2), new News("Titre de la new","Vue/Image/PlayerIl.png","10/01/2015","Paragraphe de l'article",3)];
+        $mod = new Modele();
         if(!isset($_REQUEST['page']))
             $idNew = 1;
         else
             $idNew = $_REQUEST['page'];
-        $idNew = Validation::SanitizeItem($idNew,'int');
+        if(!Validation::validateItem($idNew,'int'))
+        {
+            $tabError[]="Erreur 404! Page Not Found";
+            require(__DIR__."/../Vue/Erreur.php");
+        }
+        else
+        {
+            $idNew = Validation::SanitizeItem($idNew,'int');
+            $new = $mod->findOneNews($idNew);
+            if(isset($new)) {
+                require(__DIR__ . "/../Vue/New.php");
+            }
+            else
+            {
+                $tabError[]="Erreur 404! Page Not Found";
+                require(__DIR__."/../Vue/Erreur.php");
+            }
+        }
 
-        if($idNew < 1)
-            $idNew = 1;
-        if($idNew > count($newsTab))
-            $idNew = count($newsTab);
-        $new = $newsTab[$idNew-1];
-        require(__DIR__."/../Vue/New.php");
     }
 }

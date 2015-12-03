@@ -19,6 +19,7 @@
                         </ul>
                         <form class="navbar-form navbar-right form-inline">
                             <div class="form-group">
+                                <button type="submit" class="btn btn-info btn-sm"  name="action" value="toCreerNew"> + 1 new</button>
                                 <button type="submit" class="btn btn-info btn-sm"  name="action" value="toFormulaire">Administrateur</button>
                             </div>
                         </form>

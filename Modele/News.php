@@ -1,66 +1,18 @@
 <?php
 
 
-class News
+class News extends Doctrine_Record
 {
-    private $Titre;
-    private $Contenu;
-    private $Date;
-    private $Image;
-    private $Id;
-    /**
-     * News constructor.
-     * @param $Titre
-     * @param $Image
-     * @param $Date
-     * @param $Contenu
-     */
-    public function __construct($Titre, $Image, $Date, $Contenu ,$id)
+    public function setTableDefinition()
     {
-        $this->Titre = $Titre;
-        $this->Image = $Image;
-        $this->Date = $Date;
-        $this->Contenu = $Contenu;
-        $this->Id = $id;
+        $this->setTableName('new');
+
+        $this->hasColumn('id', 'integer', 11, array('primary' => true,
+            'autoincrement' => true));
+        $this->hasColumn('titre', 'varchar', 100);
+        $this->hasColumn('image', 'varchar', 100);
+        $this->hasColumn('contenu', 'varchar', 2096);
+        $this->hasColumn('date','date');
     }
-
-    /**
-     * @return mixed
-     */
-    public function getTitre()
-    {
-        return $this->Titre;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImage()
-    {
-        return $this->Image;
-    }
-
-    public function getId()
-    {
-        return $this->Id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDate()
-    {
-        return $this->Date;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getContenu()
-    {
-        return $this->Contenu;
-    }
-
-
 
 }

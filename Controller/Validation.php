@@ -18,10 +18,13 @@ class Validation
         switch($type)
         {
             case 'pseudo':
-            return filter_var($value,FILTER_VALIDATE_REGEXP,["options"=>["regexp"=>"/^[a-zA-Z0-9_]{3,15}$/"]]);
+                return filter_var($value,FILTER_VALIDATE_REGEXP,["options"=>["regexp"=>"/^[a-zA-Z0-9_]{3,15}$/"]]);
             break;
             case 'mdp':
                 return filter_var($value,FILTER_VALIDATE_REGEXP,["options"=>["regexp"=>"/^[a-zA-Z0-9*-/#_+]{5,15}$/"]]);
+                break;
+            case 'int':
+                return filter_var($value,FILTER_VALIDATE_INT);
                 break;
         }
         return false;

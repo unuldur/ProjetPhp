@@ -7,10 +7,10 @@
                 require_once "Debut.php";
             ?>
             <div class="jumbotron">
-                <img src="<?php echo $new->getImage() ?>" align="right" height="100px">
-                <h1><?php echo $new->getTitre(); ?></h1>
-                <p><?php echo $new->getContenu(); ?></p>
-                <p><?php echo  $new->getDate(); ?></p>
+                <img src="<?php echo $new->image ?>" align="right" height="100px">
+                <h1><?php echo $new->titre; ?></h1>
+                <p><?php echo $new->contenu; ?></p>
+                <p><?php echo  $new->date; ?></p>
             </div>
             <hr>
             <!-- Commentaires -->

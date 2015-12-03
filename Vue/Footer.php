@@ -5,5 +5,5 @@
     </div>
 </footer>
 
-<script src="js/jquery.js"></script>
-<script src="bootstrap/js/bootstrap.js "></script>
+<script src="Vue/js/jquery.js"></script>
+<script src="Vue/bootstrap/js/bootstrap.js "></script>

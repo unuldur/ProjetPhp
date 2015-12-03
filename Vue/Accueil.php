@@ -17,15 +17,15 @@
                     <div class="col-md-2"></div>
                     <article class="col-md-8 border margin padding jumbotron">
                         <div class="row" >
-                            <img src= "<?php echo $new->getImage()?>" class="col-md-3" align="left" />
+                            <img src= "<?php echo $new->image?>" class="col-md-3" align="left" />
                             <div class="col-md-9">
-                                <a class="col-md-12 h2" href="<?php echo "Index.php?action=toNew&page=".$new->getId() ?>"><?php echo $new->getTitre()?></a>
-                                <p class="col-md-12"><?php echo $new->getContenu()?></p>
+                                <a class="col-md-12 h2" href="<?php echo "Index.php?action=toNew&page=".$new->id ?>"><?php echo $new->titre?></a>
+                                <p class="col-md-12"><?php echo $new->contenu?></p>
                             </div>
                         </div>
                         <div class="row">
                             <p class="col-md-4">
-                                <?php echo $new->getDate()?>
+                                <?php echo $new->date?>
                             </p>
                             <p class="col-md-4"/>
                             <div class="col-md-4 text-right">
