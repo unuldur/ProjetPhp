@@ -20,7 +20,7 @@
                             <img src= "<?php echo $new->image?>" class="col-md-3" align="left" />
                             <div class="col-md-9">
                                 <a class="col-md-12 h2" href="<?php echo "Index.php?action=toNew&page=".$new->id ?>"><?php echo $new->titre?></a>
-                                <p class="col-md-12"><?php echo $new->contenu?></p>
+                                <p class="col-md-12"><?php echo Modele::getResumer($new->contenu)?></p>
                             </div>
                         </div>
                         <div class="row">

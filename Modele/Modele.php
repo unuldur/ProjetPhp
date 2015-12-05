@@ -37,4 +37,16 @@ class Modele
     {
         return Doctrine_Core::getTable('News')->count();
     }
+
+    public static function getResumer($text)
+    {
+        $positionDernierEspace = 0;
+        if( strlen($text) >= 100 )
+        {
+            $text= substr($text,0,100);
+            $positionDernierEspace = strrpos($text,' ');
+            $text = substr($text,0,$positionDernierEspace).'...';
+        }
+        return $text;
+    }
 }
