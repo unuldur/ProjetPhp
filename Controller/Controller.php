@@ -118,7 +118,7 @@ class Controller
         {
             $mod = new Modele();
             $mod->addNew($titre, $image, $texte);
-            //require(__DIR__."/../Vue/Accueil.php");
+            require(__DIR__."/../Vue/Valide.php");
         }
     }
 }
