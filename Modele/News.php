@@ -15,4 +15,7 @@ class News extends Doctrine_Record
         $this->hasColumn('date','date');
     }
 
+    public function setUp() {
+        $this->hasMany('Commentaire as commentaires',array('local' => 'id','foreign' => 'id_news'));
+    }
 }

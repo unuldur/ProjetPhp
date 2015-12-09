@@ -59,4 +59,14 @@ class Modele
         $new->date = date("Y-m-d");
         $new->save();
     }
+
+    function findComs($id)
+    {
+        return Doctrine_Query::create()
+            ->from('News n')
+            ->where('n.id == ?', $id)
+            ->leftJoin('n.commentaires c')
+            ->orderBy('id ASC')
+            ->execute();
+    }
 }

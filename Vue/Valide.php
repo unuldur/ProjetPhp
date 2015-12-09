@@ -4,10 +4,11 @@
         <div class="container" >
             <?php require_once "Debut.php";?>
             <div class="jumbotron">
-                <div class="container">
-                    <h1>Insertion effectuée !</h1>
-                    <p>Merci de votre apport...</p>
-                    <p>
+                <div class="alert alert-success" role="alert">
+                    <div class="row">
+                        <div class="col-lg-11"><strong>Insertion effectuée !</strong> Merci de votre apport...</div>
+                        <div class="col-lg-1"><span class='glyphicon glyphicon-saved'></span></div>
+                    </div>
                 </div>
             </div>
         </div>

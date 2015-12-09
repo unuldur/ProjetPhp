@@ -32,29 +32,23 @@
 
                 <hr>
 
-                <!-- Commentaires existants -->
-
-                <!-- Commentaire -->
-                <div class="media">
-                    <div class="media-body">
-                        <h4 class="media-heading">Pseudo
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Commentaire (contenu)
-                    </div>
-                </div>
-                
-                <hr>
-                
-                <!-- Commentaire -->
-                <div class="media">
-                    <div class="media-body">
-                        <h4 class="media-heading">Pseudo
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Commentaire (contenu)
-                    </div>
-                </div>            
+                <!-- Commentaires -->
+                <?php
+                    foreach($new->commentaires as $com)
+                    {
+                        ?>
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading"><?php echo $com->pseudo ?>
+                                    <small><?php echo $com->infos ?></small>
+                                </h4>
+                                <?php echo $com->contenu ?>
+                            </div>
+                        </div>
+                        <hr>
+                        <?php
+                    }
+                ?>
         </div>
         <?php require_once "Footer.php"; ?>
     </body>
