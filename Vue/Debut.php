@@ -5,7 +5,7 @@
                 <nav class="navbar navbar-inverse">
                     <div class="container-fluid">
                         <ul class="nav navbar-nav">
-                            <li class="active"> <a href="#">Accueil</a> </li>
+                            <li> <a href="Index.php">Accueil</a> </li>
                             <li class="dropdown">
                                 <a data-toggle="dropdown" href="#">Informations<b class="caret"></b></a>
                                 <ul class="dropdown-menu">

@@ -9,7 +9,7 @@
             <div class="jumbotron">
                 <img src="<?php echo $new->image ?>" align="right" height="100px">
                 <h1><?php echo $new->titre; ?></h1>
-                <p><?php echo $new->contenu; ?></p>
+                <p><?php echo nl2br($new->contenu); ?></p>
                 <p><?php echo  $new->date; ?></p>
             </div>
             <hr>

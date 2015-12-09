@@ -13,7 +13,7 @@ class Autoload
     public static function charger()
     {
         if(null != self::$_instance){
-            throw new RuntimeException(sprintf('%s execite deja',__CLASS__));
+            throw new RuntimeException(sprintf('%s existe déjà !',__CLASS__));
         }
         self::$_instance = new self();
     }

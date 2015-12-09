@@ -35,6 +35,9 @@ class Controller
                 case "toNew":
                     $this->toNew();
                     break;
+                case "addNew":
+                    $this->addnew();
+                    break;
                 default:
                     $tabError[]="Erreur 404! Page Not Found";
                     require(__DIR__."/../Vue/Erreur.php");
@@ -97,5 +100,25 @@ class Controller
             }
         }
 
+    }
+
+    function addNew()
+    {
+        $image = Validation::SanitizeItem($_POST["image"],'string');
+        $titre = Validation::SanitizeItem($_POST["titre"],'string');
+        $texte = Validation::SanitizeItem($_POST["texte"],'string');
+
+        if(empty($titre) || empty($texte))
+        {
+            $oktitre = !empty($titre);
+            $oktexte = !empty($texte);
+            require(__DIR__."/../Vue/CreerNew.php");
+        }
+        else
+        {
+            $mod = new Modele();
+            $mod->addNew($titre, $image, $texte);
+            //require(__DIR__."/../Vue/Accueil.php");
+        }
     }
 }

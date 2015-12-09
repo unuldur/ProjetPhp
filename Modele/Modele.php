@@ -15,7 +15,6 @@ class Modele
         Autoload::_autoload('News');
         $dsn = 'mysql://root@localhost/projetphp';
         $connexion = Doctrine_Manager::connection($dsn);
-
     }
 
     function findNews($nbNews,$aPartirDe)
@@ -48,5 +47,15 @@ class Modele
             $text = substr($text,0,$positionDernierEspace).'...';
         }
         return $text;
+    }
+
+    function addNew($titre, $image, $texte)
+    {
+        $new = new News();
+        $new->titre = $titre;
+        $new->image = "Vue/Image/".$image;
+        $new->contenu = $texte;
+        $new->date = date("Y-m-d");
+        $new->save();
     }
 }
