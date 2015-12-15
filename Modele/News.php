@@ -18,4 +18,17 @@ class News extends Doctrine_Record
     public function setUp() {
         $this->hasMany('Commentaire as commentaires',array('local' => 'id','foreign' => 'id_news'));
     }
+
+    public function getResumer()
+    {
+        $positionDernierEspace = 0;
+        $text = $this->contenu;
+        if( strlen($text) >= 100 )
+        {
+            $text= substr($text,0,100);
+            $positionDernierEspace = strrpos($text,' ');
+            $text = substr($text,0,$positionDernierEspace).'...';
+        }
+        return $text;
+    }
 }

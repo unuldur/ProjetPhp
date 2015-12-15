@@ -12,11 +12,9 @@ class Controller
     function __construct()
     {
         global $rep,$vues;
-        session_start();
 
         Autoload::_autoload('Validation');
         Autoload::_autoload('Modele');
-        try{
             if(isset($_REQUEST['action']))
                 $action = $_REQUEST['action'];
             else
@@ -43,11 +41,6 @@ class Controller
                     require(__DIR__."/../Vue/Erreur.php");
                     break;
             }
-        }catch (Exception $e)
-        {
-            $tabError[]="Erreur ! Un probleme est survenu";
-            require(__DIR__."/../Vue/Erreur.php");
-        }
     }
 
     function Accueil()
