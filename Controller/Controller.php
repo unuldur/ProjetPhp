@@ -3,73 +3,137 @@
 /**
  * Created by PhpStorm.
  * User: PAYS
- * Date: 15/12/2015
- * Time: 08:25
+ * Date: 01/12/2015
+ * Time: 12:35
  */
-class ControllerAdmin
+class Controller
 {
-    function __construct()
+
+    function __construct($admin)
     {
         global $rep,$vues;
 
+            if(isset($_REQUEST['action']))
+                $action = $_REQUEST['action'];
+            else
+                $action = NULL;
 
+            switch($action)
+            {
+                case NULL:
+                    $this->Accueil($admin);
+                    break;
+                case "toFormulaire":
+                    $this->toFormulaire($admin);
+                    break;
+                case "toNew":
+                    $this->toNew($admin);
+                    break;
+                case "connection":
+                    $this->connection();
+                    break;
+                case "addCom":
+                    $this->addCom($admin);
+                    break;
+                default:
+                    $tabError[]="Erreur 404! Page Not Found";
+                    require(__DIR__."/../Vue/Erreur.php");
+                    break;
+            }
+    }
 
-        if(isset($_REQUEST['action']))
-            $action = $_REQUEST['action'];
-        else
-            $action = NULL;
-
-
-        switch($action)
+    function connection()
+    {
+        $admin=false;
+        $modeleAdmin = new ModeleAdmin();
+        $pseudo = Validation::SanitizeItem($_POST["pseudo"],'string');
+        $mdp = Validation::SanitizeItem($_POST["mdp"],'string');
+        if(empty($pseudo) || empty($mdp))
         {
-            case "toCreerNew":
-                $this->toCreerNew();
-                break;
-            case "addNew":
-                $this->addnew();
-                break;
-            case "deconnection":
-                $this->deconnection();
-                break;
-            default:
-                $tabError[]="Erreur 404! Page Not Found";
-                require(__DIR__."/../Vue/Erreur.php");
-                break;
+            $okpseudo = !empty($pseudo);
+            $okmdp = !empty($mdp);
+            require(__DIR__."/../Vue/Formulaire.php");
+        }
+        else{
+            $modeleAdmin->connection($pseudo,$mdp);
+            if($modeleAdmin->isAdmin())
+                $this->Accueil(true);
+            else
+            {
+                $okpseudo = false;
+                $okmdp = false;
+                require(__DIR__."/../Vue/Formulaire.php");
+            }
+
         }
     }
 
-    function deconnection()
+    static function Accueil($admin)
     {
-        ModeleAdmin::deconnection();
-        Controller::Accueil(false);
+        if(!isset($_REQUEST['page']))
+            $pageActuelle = 1;
+        else
+            $pageActuelle = $_REQUEST['page'];
+        $mod = new Modele();
+        $nbNew = $mod->nbNews();
+        $nbPage = ceil($nbNew/5);
+        $newsTab = $mod->findNews(5,($pageActuelle-1)*5);
+        require(__DIR__."/../Vue/Accueil.php");
+
     }
 
-    function toCreerNew()
+    function toFormulaire($admin)
     {
-
-        $admin =true;
-        require(__DIR__."/../Vue/CreerNew.php");
+        $okpseudo =true;
+        $okmdp = true;
+        $pseudo ="";
+        require(__DIR__."/../Vue/Formulaire.php");
     }
 
-
-    function addNew()
+    function toNew($admin)
     {
-        $admin = true;
-        $image = Validation::SanitizeItem($_POST["image"],'string');
-        $titre = Validation::SanitizeItem($_POST["titre"],'string');
-        $texte = Validation::SanitizeItem($_POST["texte"],'string');
-
-        if(empty($titre) || empty($texte))
+        $mod = new Modele();
+        if(!isset($_REQUEST['page']))
+            $idNew = 1;
+        else
+            $idNew = $_REQUEST['page'];
+        if(!Validation::validateItem($idNew,'int'))
         {
-            $oktitre = !empty($titre);
+            $tabError[]="Erreur 404! Page Not Found";
+            require(__DIR__."/../Vue/Erreur.php");
+        }
+        else
+        {
+            $idNew = Validation::SanitizeItem($idNew,'int');
+            $new = $mod->findOneNews($idNew);
+            if(isset($new)) {
+                require(__DIR__ . "/../Vue/New.php");
+            }
+            else
+            {
+                $tabError[]="Erreur 404! Page Not Found";
+                require(__DIR__."/../Vue/Erreur.php");
+            }
+        }
+
+    }
+
+    function addnew($admin)
+    {
+        $pseudo = Validation::SanitizeItem($_POST["pseudo"],'string');
+        $texte = Validation::SanitizeItem($_POST["texte"],'string');
+        $infos = "Des infos";//TODO: Faire les infos
+        if(empty($pseudo) || empty($texte))
+        {
+            $okpseudo = !empty($pseudo);
             $oktexte = !empty($texte);
-            require(__DIR__."/../Vue/CreerNew.php");
         }
         else
         {
             $mod = new Modele();
-            $mod->addNew($titre, $image, $texte);
-            require(__DIR__."/../Vue/Valide.php");
+            $mod->addCom($pseudo, $infos, $texte);
         }
+        $this->toNew($admin);
     }
+
 }
