@@ -28,31 +28,32 @@ class ModeleAdmin
         }*/
     }
 
-    function connection($login, $mdp)
+    static function connection($login, $mdp)
     {
         $login = Validation::SanitizeItem($login, 'string');
         $mdp = Validation::SanitizeItem($mdp, 'string');
         $result = Doctrine_Query::create()
             ->from("Admin")
-            ->where("login =", '%' . $login . '%')
-            ->andWhere("mdp =", '%' . $mdp . '%')
+            ->where("pseudo LIKE ?", $login)
+            ->andWhere("mdp LIKE ?", $mdp)
             ->execute();
+
         if (count($result) == 1) {
+
             $_SESSION['role'] = 'admin';
             $_SESSION['login'] = $login;
         }
     }
 
-    function deconnection()
+    static function deconnection()
     {
         session_unset();
         session_destroy();
         $_SESSION = array();
     }
 
-    function isAdmin()
+    static function isAdmin()
     {
-        Autoload::_autoload("Validation");
         if (isset($_SESSION['login']) && isset($_SESSION['role']))
             return true;
         return false;

@@ -8,14 +8,16 @@
  */
 class FrontController
 {
-    function __construct()
+    function __construct($admin)
     {
-        session_start();
         Autoload::_autoload("Controller");
-        $actionVisiteur = ["toFormulaire","toNew"];
-        $actionAdmin=[];
+        Autoload::_autoload("ControllerAdmin");
+        $actionVisiteur = ["toFormulaire","toNew","connection"];
+        $actionAdmin=["addNew","toCreerNew","deconnection"];
+        Autoload::_autoload('Modele');
 
         try{
+
             if(isset($_REQUEST['action']))
                 $action = $_REQUEST['action'];
             else
@@ -23,13 +25,16 @@ class FrontController
 
             if(in_array($action,$actionAdmin))
             {
-
+                if($admin)
+                    new ControllerAdmin();
+                else
+                    require (__DIR__."/../Vue/Formulaire.php");
             }
             else
             {
                 if(in_array($action,$actionVisiteur) || $action==NULL)
                 {
-                    new Controller();
+                    new Controller($admin);
                 }
                 else
                 {

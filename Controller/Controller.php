@@ -9,32 +9,28 @@
 class Controller
 {
 
-    function __construct()
+    function __construct($admin)
     {
         global $rep,$vues;
 
-        Autoload::_autoload('Validation');
-        Autoload::_autoload('Modele');
             if(isset($_REQUEST['action']))
                 $action = $_REQUEST['action'];
             else
                 $action = NULL;
+
             switch($action)
             {
                 case NULL:
-                    $this->Accueil();
+                    $this->Accueil($admin);
                     break;
                 case "toFormulaire":
-                    $this->toFormulaire();
-                    break;
-                case "toCreerNew":
-                    $this->toCreerNew();
+                    $this->toFormulaire($admin);
                     break;
                 case "toNew":
-                    $this->toNew();
+                    $this->toNew($admin);
                     break;
-                case "addNew":
-                    $this->addnew();
+                case "connection":
+                    $this->connection();
                     break;
                 default:
                     $tabError[]="Erreur 404! Page Not Found";
@@ -43,7 +39,33 @@ class Controller
             }
     }
 
-    function Accueil()
+    function connection()
+    {
+        $admin=false;
+        $modeleAdmin = new ModeleAdmin();
+        $pseudo = Validation::SanitizeItem($_POST["pseudo"],'string');
+        $mdp = Validation::SanitizeItem($_POST["mdp"],'string');
+        if(empty($pseudo) || empty($mdp))
+        {
+            $okpseudo = !empty($pseudo);
+            $okmdp = !empty($mdp);
+            require(__DIR__."/../Vue/Formulaire.php");
+        }
+        else{
+            $modeleAdmin->connection($pseudo,$mdp);
+            if($modeleAdmin->isAdmin())
+                $this->Accueil(true);
+            else
+            {
+                $okpseudo = false;
+                $okmdp = false;
+                require(__DIR__."/../Vue/Formulaire.php");
+            }
+
+        }
+    }
+
+    static function Accueil($admin)
     {
         if(!isset($_REQUEST['page']))
             $pageActuelle = 1;
@@ -57,17 +79,15 @@ class Controller
 
     }
 
-    function toFormulaire()
+    function toFormulaire($admin)
     {
+        $okpseudo =true;
+        $okmdp = true;
+        $pseudo ="";
         require(__DIR__."/../Vue/Formulaire.php");
     }
 
-    function toCreerNew()
-    {
-        require(__DIR__."/../Vue/CreerNew.php");
-    }
-
-    function toNew()
+    function toNew($admin)
     {
         $mod = new Modele();
         if(!isset($_REQUEST['page']))
@@ -95,23 +115,4 @@ class Controller
 
     }
 
-    function addNew()
-    {
-        $image = Validation::SanitizeItem($_POST["image"],'string');
-        $titre = Validation::SanitizeItem($_POST["titre"],'string');
-        $texte = Validation::SanitizeItem($_POST["texte"],'string');
-
-        if(empty($titre) || empty($texte))
-        {
-            $oktitre = !empty($titre);
-            $oktexte = !empty($texte);
-            require(__DIR__."/../Vue/CreerNew.php");
-        }
-        else
-        {
-            $mod = new Modele();
-            $mod->addNew($titre, $image, $texte);
-            require(__DIR__."/../Vue/Valide.php");
-        }
-    }
 }

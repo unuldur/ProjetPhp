@@ -16,7 +16,7 @@ class News extends Doctrine_Record
     }
 
     public function setUp() {
-        $this->hasMany('Commentaire as commentaires',array('local' => 'id','foreign' => 'id_news'));
+        $this->hasMany('Commentaires as commentaires',array('local' => 'id','foreign' => 'id_news'));
     }
 
     public function getResumer()
