@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="Vue/bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="Vue/Css/MyCss.css" rel="stylesheet">
+        <link rel="icon" type="image/icon" href="icon.ico" />
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
