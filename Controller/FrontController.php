@@ -12,7 +12,7 @@ class FrontController
     {
         Autoload::_autoload("Controller");
         Autoload::_autoload("ControllerAdmin");
-        $actionVisiteur = ["toFormulaire","toNew","connection"];
+        $actionVisiteur = ["toFormulaire","toNew","connection","addCom"];
         $actionAdmin=["addNew","toCreerNew","deconnection"];
         Autoload::_autoload('Modele');
 

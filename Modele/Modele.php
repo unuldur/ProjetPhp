@@ -78,12 +78,12 @@ class Modele
             ->execute();
     }
 
-    function addCom($pseudo, $infos, $texte)
+    function addCom($pseudo, $infos, $texte, $idNew)
     {
         $com = new Commentaires();
         $com->pseudo = $pseudo;
         $com->infos = $infos;
         $com->contenu = $texte;
-        $com->id_new = $id;
+        $com->id_new = $idNew;
     }
 }

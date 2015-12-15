@@ -93,6 +93,10 @@ class Controller
     function toNew($admin)
     {
         $mod = new Modele();
+        if(!isset($okpseeudo)) $okpseudo = true;
+        if(!isset($oktexte)) $oktexte = true;
+        if(!isset($pseudo)) $pseudo = "";
+        if(!isset($texte)) $texte = "";
         if(!isset($_REQUEST['page']))
             $idNew = 1;
         else
@@ -118,8 +122,28 @@ class Controller
 
     }
 
-    function addnew($admin)
+    function addCom($admin)
     {
+        $mod = new Modele();
+        if(!isset($_REQUEST['page']))
+            $idNew = 1;
+        else
+            $idNew = $_REQUEST['page'];
+        if(!Validation::validateItem($idNew,'int'))
+        {
+            $tabError[]="Erreur 404! Page Not Found";
+            require(__DIR__."/../Vue/Erreur.php");
+        }
+        else
+        {
+            $idNew = Validation::SanitizeItem($idNew,'int');
+            $new = $mod->findOneNews($idNew);
+            if(!isset($new))
+            {
+                $tabError[]="Erreur 404! Page Not Found";
+                require(__DIR__."/../Vue/Erreur.php");
+            }
+        }
         $pseudo = Validation::SanitizeItem($_POST["pseudo"],'string');
         $texte = Validation::SanitizeItem($_POST["texte"],'string');
         $infos = "Des infos";//TODO: Faire les infos
@@ -131,9 +155,9 @@ class Controller
         else
         {
             $mod = new Modele();
-            $mod->addCom($pseudo, $infos, $texte);
+            $mod->addCom($pseudo, $infos, $texte, $idNew);
         }
-        $this->toNew($admin);
+        require(__DIR__ . "/../Vue/New.php");
     }
 
 }
