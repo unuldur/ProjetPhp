@@ -46,7 +46,11 @@ class ControllerAdmin
 
     function toCreerNew()
     {
-        $admin =true;
+        if(!isset($oktitre)) $oktitre = true;
+        if(!isset($oktexte)) $oktexte = true;
+        if(!isset($titre)) $titre = "";
+        if(!isset($texte)) $texte = "";
+        $admin = true;
         require(__DIR__."/../Vue/CreerNew.php");
     }
 

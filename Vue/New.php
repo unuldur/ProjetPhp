@@ -21,12 +21,12 @@
                     <form role="form">
                         <div class="form-group">
                             <h5>Pseudo* :</h5>
-                            <input type="text"/>
+                            <input type="text" name="pseudo"/>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" name="texte"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Poster</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="addCom">Poster</button>
                     </form>
                 </div>
 

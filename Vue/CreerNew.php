@@ -3,13 +3,7 @@
 <?php require_once "Entete.php";?>
     <body>
         <div class="container">
-            <?php
-                require_once "Debut.php";
-                if(!isset($oktitre)) $oktitre = true;
-                if(!isset($oktexte)) $oktexte = true;
-                if(!isset($titre)) $titre = "";
-                if(!isset($texte)) $texte = "";
-            ?>
+            <?php require_once "Debut.php";?>
             <div class="jumbotron">
                 <form class = "form" role = "form" method="post">
                     <div class = "form-inline">
