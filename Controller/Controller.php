@@ -12,7 +12,7 @@ class Controller
     function __construct($admin)
     {
         global $rep,$vues;
-
+        $mod = new Modele();
             if(isset($_REQUEST['action']))
                 $action = $_REQUEST['action'];
             else
@@ -21,19 +21,19 @@ class Controller
             switch($action)
             {
                 case NULL:
-                    $this->Accueil($admin);
+                    $this->Accueil($admin,$mod);
                     break;
                 case "toFormulaire":
                     $this->toFormulaire($admin);
                     break;
                 case "toNew":
-                    $this->toNew($admin);
+                    $this->toNew($admin,$mod);
                     break;
                 case "connection":
                     $this->connection();
                     break;
                 case "addCom":
-                    $this->addCom($admin);
+                    $this->addCom($admin,$mod);
                     break;
                 default:
                     $tabError[]="Erreur 404! Page Not Found";
@@ -68,13 +68,12 @@ class Controller
         }
     }
 
-    static function Accueil($admin)
+    static function Accueil($admin,$mod)
     {
         if(!isset($_REQUEST['page']))
             $pageActuelle = 1;
         else
             $pageActuelle = $_REQUEST['page'];
-        $mod = new Modele();
         $nbNew = $mod->nbNews();
         $nbPage = ceil($nbNew/5);
         $newsTab = $mod->findNews(5,($pageActuelle-1)*5);
@@ -90,9 +89,8 @@ class Controller
         require(__DIR__."/../Vue/Formulaire.php");
     }
 
-    function toNew($admin)
+    function toNew($admin,$mod)
     {
-        $mod = new Modele();
         if(!isset($okpseeudo)) $okpseudo = true;
         if(!isset($oktexte)) $oktexte = true;
         if(!isset($pseudo)) $pseudo = "";
@@ -122,9 +120,10 @@ class Controller
 
     }
 
-    function addCom($admin)
+    function addCom($admin,$mod)
     {
-        $mod = new Modele();
+        $okpseudo =true;
+        $oktexte = true;
         if(!isset($_REQUEST['page']))
             $idNew = 1;
         else
@@ -154,10 +153,9 @@ class Controller
         }
         else
         {
-            $mod = new Modele();
             $mod->addCom($pseudo, $infos, $texte, $idNew);
         }
-        require(__DIR__ . "/../Vue/New.php");
+        $this->toNew($admin,$mod);
     }
 
 }

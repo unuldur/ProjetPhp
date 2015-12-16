@@ -85,5 +85,6 @@ class Modele
         $com->infos = $infos;
         $com->contenu = $texte;
         $com->id_new = $idNew;
+        $com->save();
     }
 }
