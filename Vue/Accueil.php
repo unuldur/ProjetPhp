@@ -27,11 +27,18 @@
                             <p class="col-md-4">
                                 <?php echo $new->date?>
                             </p>
-                            <p class="col-md-4"/>
+                            <p class="col-md-4"><?php echo $new->nbrCommentaires()?> commentaire(s)</p>
                             <div class="col-md-4 text-right">
                                 <?php
                                     if($admin)
-                                        echo "<button type=\"submit\" class=\"btn btn-danger btn-sm\">Supprimer</button>";
+                                    {
+                                        ?>
+                                        <form method="post">
+                                            <button type="submit" class="btn btn-danger btn-sm" name="action" value="delNew">Supprimer</button>
+                                            <input type="hidden" name="id" value="<?php echo $new->id ?>"/>
+                                        </form>
+                                        <?php
+                                    }
                                 ?>
                             </div>
 

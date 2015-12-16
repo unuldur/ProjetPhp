@@ -12,7 +12,6 @@ class Controller
     function __construct($admin)
     {
         global $rep,$vues;
-        $mod = new Modele();
             if(isset($_REQUEST['action']))
                 $action = $_REQUEST['action'];
             else
@@ -21,19 +20,19 @@ class Controller
             switch($action)
             {
                 case NULL:
-                    $this->Accueil($admin,$mod);
+                    $this->Accueil();
                     break;
                 case "toFormulaire":
-                    $this->toFormulaire($admin);
+                    $this->toFormulaire();
                     break;
                 case "toNew":
-                    $this->toNew($admin,$mod);
+                    $this->toNew();
                     break;
                 case "connection":
                     $this->connection();
                     break;
                 case "addCom":
-                    $this->addCom($admin,$mod);
+                    $this->addCom();
                     break;
                 default:
                     $tabError[]="Erreur 404! Page Not Found";
@@ -45,7 +44,6 @@ class Controller
     function connection()
     {
         $admin=false;
-        $modeleAdmin = new ModeleAdmin();
         $pseudo = Validation::SanitizeItem($_POST["pseudo"],'string');
         $mdp = Validation::SanitizeItem($_POST["mdp"],'string');
         if(empty($pseudo) || empty($mdp))
@@ -55,9 +53,9 @@ class Controller
             require(__DIR__."/../Vue/Formulaire.php");
         }
         else{
-            $modeleAdmin->connection($pseudo,$mdp);
-            if($modeleAdmin->isAdmin())
-                $this->Accueil(true);
+            ModeleAdmin::connection($pseudo,$mdp);
+            if(ModeleAdmin::isAdmin())
+                $this->Accueil();
             else
             {
                 $okpseudo = false;
@@ -68,29 +66,32 @@ class Controller
         }
     }
 
-    static function Accueil($admin,$mod)
+    static function Accueil()
     {
+        $admin = ModeleAdmin::isAdmin();
         if(!isset($_REQUEST['page']))
             $pageActuelle = 1;
         else
             $pageActuelle = $_REQUEST['page'];
-        $nbNew = $mod->nbNews();
+        $nbNew = Modele::nbNews();
         $nbPage = ceil($nbNew/5);
-        $newsTab = $mod->findNews(5,($pageActuelle-1)*5);
+        $newsTab = Modele::findNews(5,($pageActuelle-1)*5);
         require(__DIR__."/../Vue/Accueil.php");
 
     }
 
-    function toFormulaire($admin)
+    function toFormulaire()
     {
+        $admin = ModeleAdmin::isAdmin();
         $okpseudo =true;
         $okmdp = true;
         $pseudo ="";
         require(__DIR__."/../Vue/Formulaire.php");
     }
 
-    function toNew($admin,$mod)
+    function toNew()
     {
+        $admin = ModeleAdmin::isAdmin();
         if(!isset($okpseeudo)) $okpseudo = true;
         if(!isset($oktexte)) $oktexte = true;
         if(!isset($pseudo)) $pseudo = "";
@@ -107,7 +108,7 @@ class Controller
         else
         {
             $idNew = Validation::SanitizeItem($idNew,'int');
-            $new = $mod->findOneNews($idNew);
+            $new = Modele::findOneNews($idNew);
             if(isset($new)) {
                 require(__DIR__ . "/../Vue/New.php");
             }
@@ -120,8 +121,9 @@ class Controller
 
     }
 
-    function addCom($admin,$mod)
+    function addCom()
     {
+        $admin = ModeleAdmin::isAdmin();
         $okpseudo =true;
         $oktexte = true;
         if(!isset($_REQUEST['page']))
@@ -136,7 +138,7 @@ class Controller
         else
         {
             $idNew = Validation::SanitizeItem($idNew,'int');
-            $new = $mod->findOneNews($idNew);
+            $new = Modele::findOneNews($idNew);
             if(!isset($new))
             {
                 $tabError[]="Erreur 404! Page Not Found";
@@ -153,9 +155,9 @@ class Controller
         }
         else
         {
-            $mod->addCom($pseudo, $infos, $texte, $idNew);
+            ModeleCommentaires::addCom($pseudo, $infos, $texte, $idNew);
         }
-        $this->toNew($admin,$mod);
+        $this->toNew();
     }
 
 }

@@ -31,4 +31,10 @@ class News extends Doctrine_Record
         }
         return $text;
     }
+
+    public function nbrCommentaires()
+    {
+        return count($this->commentaires);
+    }
+
 }

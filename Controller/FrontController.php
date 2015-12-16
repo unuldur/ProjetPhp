@@ -8,13 +8,24 @@
  */
 class FrontController
 {
-    function __construct($admin)
+    function __construct()
     {
+
+        session_start();
         Autoload::_autoload("Controller");
         Autoload::_autoload("ControllerAdmin");
-        $actionVisiteur = ["toFormulaire","toNew","connection","addCom"];
-        $actionAdmin=["addNew","toCreerNew","deconnection"];
         Autoload::_autoload('Modele');
+        Autoload::_autoload('ModeleAdmin');
+        Autoload::_autoload('ModeleCommentaires');
+        Autoload::_autoload('Validation');
+
+        $mod = new Modele();
+        $moda = new ModeleAdmin();
+        $modc = new ModeleCommentaires();
+
+        $actionVisiteur = ["toFormulaire","toNew","connection","addCom"];
+        $actionAdmin=["addNew","toCreerNew","deconnection","delNew"];
+
 
         try{
 
@@ -22,6 +33,8 @@ class FrontController
                 $action = $_REQUEST['action'];
             else
                 $action = NULL;
+
+            $admin = ModeleAdmin::isAdmin();
 
             if(in_array($action,$actionAdmin))
             {

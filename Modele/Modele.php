@@ -13,7 +13,6 @@ class Modele
         require_once(__DIR__ . '/../lib/vendor/doctrine/Doctrine.php');
         spl_autoload_register(array('Doctrine', 'autoload'));
         Autoload::_autoload('News');
-        Autoload::_autoload('Commentaires');
         $dsn = 'mysql://root@localhost/projetphp';
         $connexion = Doctrine_Manager::connection($dsn);
 
@@ -38,7 +37,18 @@ class Modele
         }*/
     }
 
-    function findNews($nbNews,$aPartirDe)
+    static function delNews($id)
+    {
+        $new = self::findOneNews($id);
+
+        foreach($new->commentaires as $com)
+        {
+            ModeleCommentaires::delCom($com->id);
+        }
+        $new->delete();
+    }
+
+    static function findNews($nbNews,$aPartirDe)
     {
         return Doctrine_Query::create()
             ->from('News')
@@ -48,17 +58,17 @@ class Modele
             ->execute();
     }
 
-    function findOneNews($id)
+    static function findOneNews($id)
     {
         return Doctrine_Core::getTable('News')->find($id);
     }
 
-    function nbNews()
+    static function nbNews()
     {
         return Doctrine_Core::getTable('News')->count();
     }
 
-    function addNew($titre, $image, $texte)
+    static function addNew($titre, $image, $texte)
     {
         $new = new News();
         $new->titre = $titre;
@@ -68,23 +78,14 @@ class Modele
         $new->save();
     }
 
-    function findComs($id)
+    static function findComs($id)
     {
         return Doctrine_Query::create()
             ->from('News n')
             ->where('n.id == ?', $id)
-            ->leftJoin('n.commentaires c')
+            ->leftJoin('n.Commentaires c')
             ->orderBy('id ASC')
             ->execute();
     }
 
-    function addCom($pseudo, $infos, $texte, $idNew)
-    {
-        $com = new Commentaires();
-        $com->pseudo = $pseudo;
-        $com->infos = $infos;
-        $com->contenu = $texte;
-        $com->id_new = $idNew;
-        $com->save();
-    }
 }

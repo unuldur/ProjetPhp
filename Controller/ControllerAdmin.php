@@ -31,6 +31,9 @@ class ControllerAdmin
             case "deconnection":
                 $this->deconnection();
                 break;
+            case "delNew":
+                $this->delNew();
+                break;
             default:
                 $tabError[]="Erreur 404! Page Not Found";
                 require(__DIR__."/../Vue/Erreur.php");
@@ -41,7 +44,7 @@ class ControllerAdmin
     function deconnection()
     {
         ModeleAdmin::deconnection();
-        Controller::Accueil(false);
+        Controller::Accueil();
     }
 
     function toCreerNew()
@@ -70,9 +73,26 @@ class ControllerAdmin
         }
         else
         {
-            $mod = new Modele();
-            $mod->addNew($titre, $image, $texte);
+            Modele::addNew($titre, $image, $texte);
             require(__DIR__."/../Vue/Valide.php");
         }
+    }
+
+    function delNew()
+    {
+        $admin = true;
+        $idNew = -1;
+        if(isset($_REQUEST['id']))
+            $idNew = $_REQUEST['id'];
+        try{
+            Modele::delNews($idNew);
+            Controller::Accueil();
+        }catch(Exception $e)
+        {
+
+            $tabError[]="Probleme supression";
+            require(__DIR__."/../Vue/Erreur.php");
+        }
+
     }
 }
