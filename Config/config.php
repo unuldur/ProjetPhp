@@ -18,3 +18,4 @@ $vues['Footer'] = 'Vue/Footer.php';
 $vues['Formulaire'] = 'Vue/Formulaire.php';
 $vues['New'] = 'Vue/New.php';
 $vues['Erreur'] = 'Vue/Erreur.php';
+$vues['Valide'] = 'Vue/Valide.php';

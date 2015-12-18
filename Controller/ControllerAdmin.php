@@ -12,8 +12,6 @@ class ControllerAdmin
     {
         global $rep,$vues;
 
-
-
         if(isset($_REQUEST['action']))
             $action = $_REQUEST['action'];
         else
@@ -33,6 +31,9 @@ class ControllerAdmin
                 break;
             case "delNew":
                 $this->delNew();
+                break;
+            case "delCom":
+                $this->delCom();
                 break;
             default:
                 $tabError[]="Erreur 404! Page Not Found";
@@ -89,10 +90,24 @@ class ControllerAdmin
             Controller::Accueil();
         }catch(Exception $e)
         {
-
-            $tabError[]="Probleme supression";
+            $tabError[]="Erreur lors de la suppression de la new !";
             require(__DIR__."/../Vue/Erreur.php");
         }
+    }
 
+    function delCom()
+    {
+        $admin = true;
+        $idCom = -1;
+        if(isset($_REQUEST['idCom']))
+            $idCom = $_REQUEST['idCom'];
+        try{
+            ModeleCommentaires::delCom($idCom);
+            header($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+        }catch(Exception $e)
+        {
+            $tabError[]="Erreur lors de la suppression du commentaire !";
+            require(__DIR__."/../Vue/Erreur.php");
+        }
     }
 }

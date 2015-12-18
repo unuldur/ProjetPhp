@@ -20,6 +20,12 @@ class Commentaires extends Doctrine_Record
         $this->hasColumn('contenu', 'varchar', 2096);
     }
 
+    public function getContenu()
+    {
+        require_once("Controller/BBCodeConverter.php");
+        return BBCodeConverter::bbcodeToHtml($this->contenu);
+    }
+
     public function setUp() {
         $this->hasOne('News as news',array('local' => 'id_news','foreign' => 'id'));
     }

@@ -14,6 +14,8 @@ class ModeleAdmin
         spl_autoload_register(array('Doctrine', 'autoload'));
         Autoload::_autoload('Admin');
         $dsn = 'mysql://root@localhost/projetphp';
+        //... Pareil :
+        //$dsn = 'mysql://codemontgo:thebigboss@hina/dbcodemontgo';
         $connexion = Doctrine_Manager::connection($dsn);
 
         //creation de la table admin

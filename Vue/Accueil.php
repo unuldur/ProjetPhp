@@ -25,7 +25,7 @@
                         </div>
                         <div class="row">
                             <p class="col-md-4">
-                                <?php echo $new->date?>
+                                <?php echo DateTime::createFromFormat("Y-m-d H:i:s", $new->date)->format('\L\e d/m/Y \à H\hi')?>
                             </p>
                             <p class="col-md-4"><?php echo $new->nbrCommentaires()?> commentaire(s)</p>
                             <div class="col-md-4 text-right">

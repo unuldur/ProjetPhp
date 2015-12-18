@@ -7,8 +7,8 @@
             <div class="jumbotron">
                 <img src="<?php echo $new->image ?>" align="right" height="100px">
                 <h1><?php echo $new->titre; ?></h1>
-                <p><?php echo nl2br($new->contenu); ?></p>
-                <p><?php echo  $new->date; ?></p>
+                <p><?php echo nl2br($new->getContenu()); ?></p>
+                <p><?php echo DateTime::createFromFormat("Y-m-d H:i:s", $new->date)->format('\L\e d/m/Y \à H\hi') ?></p>
             </div>
             <hr>
             <!-- Commentaires -->
@@ -29,23 +29,36 @@
 
                 <hr>
 
-                <!-- Commentaires -->
-                <?php
-                    foreach($new->commentaires as $com)
-                    {
-                        ?>
-                        <div class="media">
-                            <div class="media-body">
-                                <h4 class="media-heading"><?php echo $com->pseudo ?>
-                                    <small><?php echo $com->infos ?></small>
-                                </h4>
-                                <?php echo $com->contenu ?>
-                            </div>
-                        </div>
-                        <hr>
-                        <?php
-                    }
+            <!-- Commentaires postés -->
+            <?php
+            foreach($new->commentaires as $com)
+            {
                 ?>
+                <div class="media inline">
+                    <div class="media-body">
+                        <h4 class="media-heading"><?php echo $com->pseudo ?>
+                            <small><?php echo $com->infos ?></small>
+                        </h4>
+                        <?php echo nl2br($com->getContenu()) ?>
+                    </div>
+                    <div class="text-right">
+                        <?php
+                        if($admin)
+                        {
+                            ?>
+                            <form method="post">
+                                <button type="submit" class="btn btn-danger btn-sm" name="action" value="delCom">Supprimer</button>
+                                <input type="hidden" name="idCom" value="<?php echo $com->id ?>"/>
+                            </form>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+                <hr>
+                <?php
+            }
+            ?>
         </div>
         <?php require_once "Footer.php"; ?>
     </body>
