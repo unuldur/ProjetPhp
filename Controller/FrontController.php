@@ -17,7 +17,7 @@ class FrontController
         $moda = new ModeleAdmin();
         $modc = new ModeleCommentaires();
 
-        $actionVisiteur = ["toFormulaire","toNew","connection","addCom"];
+        $actionVisiteur = ["toFormulaire","toNew","connection","addCom","affAll"];
         $actionAdmin=["addNew","toCreerNew","deconnection","delNew","toSuppression","delCom"];
 
 

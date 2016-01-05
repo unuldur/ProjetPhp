@@ -34,6 +34,9 @@ class Controller
                 case "addCom":
                     $this->addCom();
                     break;
+                case "affAll":
+                    $this->affAll();
+                    break;
                 default:
                     $tabError[]="Erreur 404! Page Not Found";
                     require(__DIR__."/../Vue/Erreur.php");
@@ -94,13 +97,13 @@ class Controller
         require(__DIR__."/../Vue/Formulaire.php");
     }
 
-    function toNew($okpseudo=true, $oktexte=true, $texte = "", $pseudo = "")
+    function toNew($okpseudo=true, $oktexte=true, $texte = "", $pseudo = "", $allCom = false)
     {
         if(empty($pseudo) && isset($_COOKIE['pseudo']) && Validation::validateItem($_COOKIE['pseudo'],'pseudo'))
         {
             $pseudo = $_COOKIE['pseudo'];
         }
-
+        $nbComAff = 10;
         $nbNew = Modele::nbNews();
         $admin = ModeleAdmin::isAdmin();
         if(!isset($okpseeudo)) $okpseudo = true;
@@ -121,6 +124,7 @@ class Controller
             $idNew = Validation::SanitizeItem($idNew,'int');
             $new = Modele::findOneNews($idNew);
             if(isset($new)) {
+                $nbCom = $new->nbrCommentaires();
                 require(__DIR__ . "/../Vue/New.php");
             }
             else
@@ -170,7 +174,10 @@ class Controller
             $nbCom = 1;
             setcookie('nbCom',$nbCom,time()+2*12*31*24*3600);
         }
-        $infos = "Le ".date("Y/m/d")." à ".date("H\hi:s")." Commentaires postés : ".$nbCom;
+        $term = "ème";
+        if($nbCom == 1)
+            $term = "er";
+        $infos = "Le ".date("Y/m/d")." à ".date("H\hi:s")." ".$nbCom.$term." commentaire posté.";
         $okpseudo = !empty($pseudo);
         $oktexte = !empty($texte);
         if($okpseudo && $oktexte)
@@ -188,6 +195,11 @@ class Controller
             setcookie('nbCom',$nbCom,time()+2*12*31*24*3600);
         }
         $this->toNew($okpseudo, $oktexte, $texte, $pseudo);
+    }
+
+    function affAll()
+    {
+        $this->toNew(true, true, "","",true);
     }
 
 }

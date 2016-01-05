@@ -31,8 +31,13 @@
 
             <!-- Commentaires postés -->
             <?php
-            foreach($new->commentaires as $com)
+            if($allCom || $nbCom < $nbComAff)
+                $j = $nbCom;
+            else
+                $j = $nbComAff;
+            for($i=0;$i<$j; ++$i)
             {
+                $com = $new->commentaires[$i];
                 ?>
                 <div class="media inline">
                     <div class="media-body">
@@ -56,6 +61,14 @@
                     </div>
                 </div>
                 <hr>
+                <?php
+            }
+            if($nbCom > $nbComAff && !$allCom)
+            {
+                ?>
+                <form role="form" method="post">
+                <button type="submit" class="btn btn-primary" name="action" value="affAll">Afficher plus de commentaires (<?php echo ($nbCom-10); ?>)</button>
+                </form>
                 <?php
             }
             ?>

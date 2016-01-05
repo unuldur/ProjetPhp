@@ -136,7 +136,9 @@ class ControllerAdmin
             $idCom = $_REQUEST['idCom'];
         try{
             ModeleCommentaires::delCom($idCom);
-            header($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+            $nbNew = Modele::nbNews();
+            $text =" <strong>Suppression effectuée !</strong> Merci de votre apport..." ;
+            require(__DIR__."/../Vue/Valide.php");
         }catch(Exception $e)
         {
             $tabError[]="Erreur lors de la suppression du commentaire !";
