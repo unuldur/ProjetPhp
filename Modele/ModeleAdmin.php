@@ -12,7 +12,6 @@ class ModeleAdmin
     {
         require_once(__DIR__ . '/../lib/vendor/doctrine/Doctrine.php');
         spl_autoload_register(array('Doctrine', 'autoload'));
-        Autoload::_autoload('Admin');
         $dsn = 'mysql://root@localhost/projetphp';
         //... Pareil :
         //$dsn = 'mysql://codemontgo:thebigboss@hina/dbcodemontgo';

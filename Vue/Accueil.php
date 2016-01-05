@@ -8,6 +8,7 @@
         <?php
         require_once "Debut.php";
         ?>
+
         <?php
         foreach($newsTab as $new)
         if (isset($new)) {
@@ -34,7 +35,7 @@
                                     {
                                         ?>
                                         <form method="post">
-                                            <button type="submit" class="btn btn-danger btn-sm" name="action" value="delNew">Supprimer</button>
+                                            <button type="submit" class="btn btn-danger btn-sm" name="action" value="toSuppression">Supprimer</button>
                                             <input type="hidden" name="id" value="<?php echo $new->id ?>"/>
                                         </form>
                                         <?php
@@ -69,6 +70,7 @@
             <li <?php if($pageActuelle==$nbPage) echo 'class="disabled"'?>"><a <?php $a = $pageActuelle+1; if($pageActuelle!=$nbPage)echo' href="Index.php?page='.$a.'"'; ?>>&raquo;</a></li>
         </ul>
     </div>
+
     <?php require ("Footer.php"); ?>
     </body>
 </html>

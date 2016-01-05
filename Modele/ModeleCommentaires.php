@@ -12,7 +12,6 @@ class ModeleCommentaires
     {
         require_once(__DIR__ . '/../lib/vendor/doctrine/Doctrine.php');
         spl_autoload_register(array('Doctrine', 'autoload'));
-        Autoload::_autoload('Commentaires');
         $dsn = 'mysql://root@localhost/projetphp';
         //Ou (pour l'iut) :
         //$dsn = 'mysql://codemontgo:thebigboss@hina/dbcodemontgo';

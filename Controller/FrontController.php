@@ -12,19 +12,13 @@ class FrontController
     {
 
         session_start();
-        Autoload::_autoload("Controller");
-        Autoload::_autoload("ControllerAdmin");
-        Autoload::_autoload('Modele');
-        Autoload::_autoload('ModeleAdmin');
-        Autoload::_autoload('ModeleCommentaires');
-        Autoload::_autoload('Validation');
 
         $mod = new Modele();
         $moda = new ModeleAdmin();
         $modc = new ModeleCommentaires();
 
         $actionVisiteur = ["toFormulaire","toNew","connection","addCom"];
-        $actionAdmin=["addNew","toCreerNew","deconnection","delNew","delCom"];
+        $actionAdmin=["addNew","toCreerNew","deconnection","delNew","toSuppression","delCom"];
 
 
         try{

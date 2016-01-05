@@ -43,6 +43,8 @@ class Controller
 
     function connection()
     {
+
+        $nbNew = Modele::nbNews();
         $admin=false;
         $pseudo = Validation::SanitizeItem($_POST["pseudo"],'string');
         $mdp = Validation::SanitizeItem($_POST["mdp"],'string');
@@ -54,8 +56,10 @@ class Controller
         }
         else{
             ModeleAdmin::connection($pseudo,$mdp);
-            if(ModeleAdmin::isAdmin())
-                $this->Accueil();
+            if(ModeleAdmin::isAdmin()) {
+                $text = " Vous êtes connecté sous le pseudo " . $pseudo;
+                require(__DIR__ . "/../Vue/Valide.php");
+            }
             else
             {
                 $okpseudo = false;
@@ -81,6 +85,8 @@ class Controller
 
     function toFormulaire()
     {
+
+        $nbNew = Modele::nbNews();
         $admin = ModeleAdmin::isAdmin();
         $okpseudo =true;
         $okmdp = true;
@@ -94,7 +100,13 @@ class Controller
         {
             $pseudo = $_COOKIE['pseudo'];
         }
+
+        $nbNew = Modele::nbNews();
         $admin = ModeleAdmin::isAdmin();
+        if(!isset($okpseeudo)) $okpseudo = true;
+        if(!isset($oktexte)) $oktexte = true;
+        if(!isset($pseudo)) $pseudo = "";
+        if(!isset($texte)) $texte = "";
         if(!isset($_REQUEST['page']))
             $idNew = 1;
         else
@@ -122,7 +134,11 @@ class Controller
 
     function addCom()
     {
+
+        $nbNew = Modele::nbNews();
         $admin = ModeleAdmin::isAdmin();
+        $okpseudo =true;
+        $oktexte = true;
         if(!isset($_REQUEST['page']))
             $idNew = 1;
         else

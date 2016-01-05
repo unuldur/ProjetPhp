@@ -17,9 +17,9 @@
                                 </ul>
                             </li>
                         </ul>
-                        <form class="navbar-form navbar-right form-inline">
+                        <form class="navbar-form navbar-right form-inline" method="post">
 
-                            <div class="form-group">
+                            <div class="form-group" >
                                 <?php
                                 if($admin) {
                                     ?>

@@ -30,7 +30,10 @@ class ControllerAdmin
                 $this->deconnection();
                 break;
             case "delNew":
-                $this->delNew();
+            $this->delNew();
+            break;
+            case "toSuppression":
+                $this->toSuppression();
                 break;
             case "delCom":
                 $this->delCom();
@@ -41,15 +44,39 @@ class ControllerAdmin
                 break;
         }
     }
+    function toSuppression()
+    {
+
+        $nbNew = Modele::nbNews();
+        $admin = true;
+        $idNew = -1;
+        if(isset($_REQUEST['id']))
+            $idNew = $_REQUEST['id'];
+        try{
+            $new = Modele::findOneNews($idNew);
+            require(__DIR__."/../Vue/Suppression.php");
+        }catch(Exception $e)
+        {
+
+            $tabError[]="Probleme supression";
+            require(__DIR__."/../Vue/Erreur.php");
+        }
+    }
 
     function deconnection()
     {
+
+        $nbNew = Modele::nbNews();
+        $admin =false;
         ModeleAdmin::deconnection();
-        Controller::Accueil();
+        $text =" <strong>Vous vous êtes deconnecté</strong>" ;
+        require(__DIR__."/../Vue/Valide.php");
     }
 
     function toCreerNew()
     {
+
+        $nbNew = Modele::nbNews();
         if(!isset($oktitre)) $oktitre = true;
         if(!isset($oktexte)) $oktexte = true;
         if(!isset($titre)) $titre = "";
@@ -68,6 +95,8 @@ class ControllerAdmin
 
         if(empty($titre) || empty($texte))
         {
+
+            $nbNew = Modele::nbNews();
             $oktitre = !empty($titre);
             $oktexte = !empty($texte);
             require(__DIR__."/../Vue/CreerNew.php");
@@ -75,6 +104,8 @@ class ControllerAdmin
         else
         {
             Modele::addNew($titre, $image, $texte);
+            $nbNew = Modele::nbNews();
+            $text =" <strong>Ajout effectuée !</strong> Merci de votre apport..." ;
             require(__DIR__."/../Vue/Valide.php");
         }
     }
@@ -87,7 +118,9 @@ class ControllerAdmin
             $idNew = $_REQUEST['id'];
         try{
             Modele::delNews($idNew);
-            Controller::Accueil();
+            $nbNew = Modele::nbNews();
+            $text =" <strong>Suppression effectuée !</strong> Merci de votre apport..." ;
+            require(__DIR__."/../Vue/Valide.php");
         }catch(Exception $e)
         {
             $tabError[]="Erreur lors de la suppression de la new !";
@@ -109,5 +142,6 @@ class ControllerAdmin
             $tabError[]="Erreur lors de la suppression du commentaire !";
             require(__DIR__."/../Vue/Erreur.php");
         }
+
     }
 }

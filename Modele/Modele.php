@@ -12,7 +12,6 @@ class Modele
     {
         require_once(__DIR__ . '/../lib/vendor/doctrine/Doctrine.php');
         spl_autoload_register(array('Doctrine', 'autoload'));
-        Autoload::_autoload('News');
         $dsn = 'mysql://root@localhost/projetphp';
         $connexion = Doctrine_Manager::connection($dsn);
         //Si c'est dans l'iut (pour la bdd de Côme), remplacer le dns par celui-ci :
