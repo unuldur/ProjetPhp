@@ -17,32 +17,42 @@ class ControllerAdmin
         else
             $action = NULL;
 
-
-        switch($action)
+        try{
+            switch($action)
+            {
+                case "toCreerNew":
+                    $this->toCreerNew();
+                    break;
+                case "addNew":
+                    $this->addnew();
+                    break;
+                case "deconnection":
+                    $this->deconnection();
+                    break;
+                case "delNew":
+                    $this->delNew();
+                    break;
+                case "toSuppression":
+                    $this->toSuppression();
+                    break;
+                case "delCom":
+                    $this->delCom();
+                    break;
+                default:
+                    $tabError[]="Erreur 404! Page Not Found";
+                    require(__DIR__."/../Vue/Erreur.php");
+                    break;
+            }
+        }catch(Exception $e)
         {
-            case "toCreerNew":
-                $this->toCreerNew();
-                break;
-            case "addNew":
-                $this->addnew();
-                break;
-            case "deconnection":
-                $this->deconnection();
-                break;
-            case "delNew":
-            $this->delNew();
-            break;
-            case "toSuppression":
-                $this->toSuppression();
-                break;
-            case "delCom":
-                $this->delCom();
-                break;
-            default:
-                $tabError[]="Erreur 404! Page Not Found";
-                require(__DIR__."/../Vue/Erreur.php");
-                break;
+            $tabError[]="Erreur : ".$e->getMessage();
+            require(__DIR__."/../Vue/Erreur.php");
+        }catch(PDOException $e)
+        {
+            $tabError[]="Erreur : ".$e->getMessage();
+            require(__DIR__."/../Vue/Erreur.php");
         }
+
     }
     function toSuppression()
     {
@@ -137,7 +147,7 @@ class ControllerAdmin
         try{
             ModeleCommentaires::delCom($idCom);
             $nbNew = Modele::nbNews();
-            $text =" <strong>Suppression effectuée !</strong> Merci de votre apport..." ;
+            $text =" <strong>Suppression effectuée !</strong> Merci de votre virgilance..." ;
             require(__DIR__."/../Vue/Valide.php");
         }catch(Exception $e)
         {

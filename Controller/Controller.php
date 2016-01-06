@@ -12,11 +12,12 @@ class Controller
     function __construct($admin)
     {
         global $rep,$vues;
-            if(isset($_REQUEST['action']))
-                $action = $_REQUEST['action'];
-            else
-                $action = NULL;
+        if(isset($_REQUEST['action']))
+            $action = $_REQUEST['action'];
+        else
+            $action = NULL;
 
+        try{
             switch($action)
             {
                 case NULL:
@@ -42,6 +43,15 @@ class Controller
                     require(__DIR__."/../Vue/Erreur.php");
                     break;
             }
+        }catch(Exception $e)
+        {
+            $tabError[]="Erreur : ".$e->getMessage();
+            require(__DIR__."/../Vue/Erreur.php");
+        }catch(PDOException $e)
+        {
+            $tabError[]="Erreur : ".$e->getMessage();
+            require(__DIR__."/../Vue/Erreur.php");
+        }
     }
 
     function connection()
@@ -99,9 +109,9 @@ class Controller
 
     function toNew($okpseudo=true, $oktexte=true, $texte = "", $pseudo = "", $allCom = false)
     {
-        if(empty($pseudo) && isset($_COOKIE['pseudo']) && Validation::validateItem($_COOKIE['pseudo'],'pseudo'))
+        if(empty($pseudo) && ModeleCookies::getCookie('pseudo','pseudo')!="")
         {
-            $pseudo = $_COOKIE['pseudo'];
+            $pseudo = ModeleCookies::getCookie('pseudo','pseudo');
         }
         $nbComAff = 10;
         $nbNew = Modele::nbNews();
@@ -123,7 +133,7 @@ class Controller
         {
             $idNew = Validation::SanitizeItem($idNew,'int');
             $new = Modele::findOneNews($idNew);
-            if(isset($new)) {
+            if(isset($new) && $new) {
                 $nbCom = $new->nbrCommentaires();
                 require(__DIR__ . "/../Vue/New.php");
             }
@@ -164,15 +174,15 @@ class Controller
         }
         $pseudo = Validation::SanitizeItem($_POST["pseudo"],'string');
         $texte = Validation::SanitizeItem($_POST["texte"],'string');
-        if(isset($_COOKIE['nbCom']) && Validation::validateItem($_COOKIE['nbCom'], "int"))
+        if(ModeleCookies::getCookie('nbCom','int')!="")
         {
-            $nbCom = $_COOKIE['nbCom'] +1;
-            setcookie('nbCom',$nbCom,time()+2*12*31*24*3600);
+            $nbCom = ModeleCookies::getCookie('nbCom','int') +1;
+            ModeleCookies::setCookie('nbCom', $nbCom);
         }
         else
         {
             $nbCom = 1;
-            setcookie('nbCom',$nbCom,time()+2*12*31*24*3600);
+            ModeleCookies::setCookie('nbCom', $nbCom);
         }
         $term = "ème";
         if($nbCom == 1)
@@ -182,9 +192,9 @@ class Controller
         $oktexte = !empty($texte);
         if($okpseudo && $oktexte)
         {
-            if((!isset($_COOKIE['pseudo'])) || ($pseudo != Validation::SanitizeItem($_COOKIE['pseudo'], 'string')))
+            if(ModeleCookies::getCookie('pseudo','pseudo')!="" || ($pseudo != ModeleCookies::getCookie('pseudo','pseudo')))
             {
-                setcookie('pseudo',$pseudo,time()+31*24*3600);
+                ModeleCookies::setCookie('pseudo', $pseudo);
             }
             ModeleCommentaires::addCom($pseudo, $infos, $texte, $idNew);
             $texte = "";
@@ -192,7 +202,7 @@ class Controller
         else
         {
             $nbCom --;
-            setcookie('nbCom',$nbCom,time()+2*12*31*24*3600);
+            ModeleCookies::setCookie('nbCom', $nbCom);
         }
         $this->toNew($okpseudo, $oktexte, $texte, $pseudo);
     }
