@@ -17,6 +17,15 @@
                                 </ul>
                             </li>
                         </ul>
+
+                        <form class="navbar-form navbar-right form-inline" method="post">
+                            <input type="search" class="input-sm form-control" placeholder="Recherche" name="aChercher">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                Chercher
+                            </button>
+                        </form>
+
                         <form class="navbar-form navbar-right form-inline" method="post">
 
                             <div class="form-group" >
@@ -29,10 +38,16 @@
                                     <button type="submit" class="btn btn-info btn-sm" name="action" value="deconnection">Deconnection</button>
                                     <?php
                                 }
+                                else{
+                                    ?>
+                                        <button type="submit" class="btn btn-info btn-sm"  name="action" value="toFormulaire">Administrateur</button>
+                                    <?php
+                                }
                                 ?>
-                                <button type="submit" class="btn btn-info btn-sm"  name="action" value="toFormulaire">Administrateur</button>
+
                             </div>
 
                         </form>
+
                     </div>
                 </nav>

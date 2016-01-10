@@ -40,14 +40,24 @@ class Modele
         $new->delete();
     }
 
-    static function findNews($nbNews,$aPartirDe)
+    static function findNews($nbNews,$aPartirDe, $motCle)
     {
-        return Doctrine_Query::create()
-            ->from('News')
-            ->orderBy('date DESC')
-            ->limit($nbNews)
-            ->offset($aPartirDe)
-            ->execute();
+        if($motCle == NULL)
+            return Doctrine_Query::create()
+                ->from('News')
+                ->orderBy('date DESC')
+                ->limit($nbNews)
+                ->offset($aPartirDe)
+                ->execute();
+        else
+            return Doctrine_Query::create()
+                ->from('News')
+                ->where('titre LIKE ?','%'.$motCle.'%')
+                ->Orwhere('contenu LIKE ?','%'.$motCle.'%')
+                ->orderBy('date DESC')
+                ->limit($nbNews)
+                ->offset($aPartirDe)
+                ->execute();
     }
 
     static function findOneNews($id)
@@ -58,6 +68,15 @@ class Modele
     static function nbNews()
     {
         return Doctrine_Core::getTable('News')->count();
+    }
+
+    static function nbNewsc($motCle)
+    {
+        return Doctrine_Query::create()
+            ->from('News')
+            ->where('titre LIKE ?','%'.$motCle.'%')
+            ->Orwhere('contenu LIKE ?','%'.$motCle.'%')
+            ->count();
     }
 
     static function addNew($titre, $image, $texte)

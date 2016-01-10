@@ -67,7 +67,7 @@
                         echo '<li class="active"><a href="#">'.$i.'</a></li>';
                 }
             ?>
-            <li <?php if($pageActuelle==$nbPage) echo 'class="disabled"'?>"><a <?php $a = $pageActuelle+1; if($pageActuelle!=$nbPage)echo' href="Index.php?page='.$a.'"'; ?>>&raquo;</a></li>
+            <li <?php if($pageActuelle==$nbPage || $nbPage==0) echo 'class="disabled"'?>"><a <?php $a = $pageActuelle+1; if($pageActuelle!=$nbPage)echo' href="Index.php?page='.$a.'"'; ?>>&raquo;</a></li>
         </ul>
     </div>
 

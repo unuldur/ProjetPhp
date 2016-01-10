@@ -17,9 +17,8 @@ class ControllerAdmin
         else
             $action = NULL;
 
-        try{
-            switch($action)
-            {
+        if(ModeleAdmin::isAdmin()) {
+            switch ($action) {
                 case "toCreerNew":
                     $this->toCreerNew();
                     break;
@@ -39,20 +38,15 @@ class ControllerAdmin
                     $this->delCom();
                     break;
                 default:
-                    $tabError[]="Erreur 404! Page Not Found";
-                    require(__DIR__."/../Vue/Erreur.php");
+                    $tabError[] = "Erreur 404! Page Not Found";
+                    require(__DIR__ . "/../Vue/Erreur.php");
                     break;
             }
-        }catch(Exception $e)
-        {
-            $tabError[]="Erreur : ".$e->getMessage();
-            require(__DIR__."/../Vue/Erreur.php");
-        }catch(PDOException $e)
-        {
-            $tabError[]="Erreur : ".$e->getMessage();
-            require(__DIR__."/../Vue/Erreur.php");
         }
-
+        else{
+            $tabError[] = "Vous n'etes pas admin O.O";
+            require(__DIR__ . "/../Vue/Erreur.php");
+        }
     }
     function toSuppression()
     {
@@ -147,7 +141,7 @@ class ControllerAdmin
         try{
             ModeleCommentaires::delCom($idCom);
             $nbNew = Modele::nbNews();
-            $text =" <strong>Suppression effectuée !</strong> Merci de votre virgilance..." ;
+            $text =" <strong>Suppression effectuée !</strong> Merci de votre apport..." ;
             require(__DIR__."/../Vue/Valide.php");
         }catch(Exception $e)
         {

@@ -90,11 +90,23 @@ class Controller
             $pageActuelle = 1;
         else
             $pageActuelle = $_REQUEST['page'];
-        $nbNew = Modele::nbNews();
+
+        if(isset($_REQUEST['aChercher']))
+            $chercher = $_REQUEST['aChercher'];
+        else
+            $chercher = null;
+        echo $chercher;
+        $newsTab = Modele::findNews(5,($pageActuelle-1)*5,$chercher);
+
+        if($chercher == null)
+            $nbNew = Modele::nbNews();
+        else
+            $nbNew = Modele::nbNewsc($chercher);
         $nbPage = ceil($nbNew/5);
-        $newsTab = Modele::findNews(5,($pageActuelle-1)*5);
+
         require(__DIR__."/../Vue/Accueil.php");
     }
+
 
     function toFormulaire()
     {
